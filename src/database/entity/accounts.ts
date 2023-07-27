@@ -8,28 +8,28 @@ export class Account extends BaseEntity {
   id: number;
 
   @Column({ name: 'account_limit' })
-  accountLimit: string;
+  accountLimit: number;
 
   @Column({ name: 'per_transaction_limit' })
-  perTransactionLimit: string;
+  perTransactionLimit: number;
 
   @Column({ name: 'last_account_limit', nullable: true })
-  lastAccountLimit: string;
+  lastAccountLimit?: number;
 
   @Column({ name: 'last_per_transaction_limit', nullable: true })
-  lastPerTransactionLimit: string;
+  lastPerTransactionLimit?: number;
 
   @Column({ name: 'account_limit_update_time', nullable: true })
-  accountLimitUpdateTime: Date;
+  accountLimitUpdateTime?: Date;
 
   @Column({ name: 'per_transaction_limit_update_time', nullable: true })
-  perTransactionLimitUpdateTime: Date;
+  perTransactionLimitUpdateTime?: Date;
 
   @Column({ name: 'created_at' })
   createdAt: Date;
 
   @Column({ name: 'updated_at', nullable: true })
-  updatedAt: Date;
+  updatedAt?: Date;
 
   @Column({ name: 'customer_id' })
   customerId: number;

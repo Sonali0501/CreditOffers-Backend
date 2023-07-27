@@ -1,7 +1,7 @@
 import { IConfigApp } from './constraint';
 
 const config: IConfigApp = {
-  port: 4000,
+  port: 8000,
   origin: '*',
   credentials: true,
   typeorm: {

@@ -23,23 +23,20 @@ export class Offer extends BaseEntity {
   @Column({ name: 'new_limit' })
   newLimit: number;
 
-  @Column({ name: 'per_transaction_limit' })
-  perTransactionLimit: string;
-
   @Column({ name: 'activation_time' })
   activationTime: Date;
 
   @Column({ name: 'expiry_time' })
   expiryTime: Date;
 
-  @Column({ type: 'enum', enum: Statuses })
+  @Column({ type: 'enum', enum: Statuses, default: 'PENDING' })
   status: Statuses;
 
   @Column({ name: 'created_at' })
   createdAt: Date;
 
   @Column({ name: 'updated_at', nullable: true })
-  updatedAt: Date;
+  updatedAt?: Date;
 
   @Column({ name: 'account_id' })
   accountId: number;

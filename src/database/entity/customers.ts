@@ -10,7 +10,7 @@ export class Customer extends BaseEntity {
   name: string;
 
   @Column()
-  phone: number;
+  phone: string;
 
   @Column()
   email: string;
@@ -19,7 +19,7 @@ export class Customer extends BaseEntity {
   createdAt: Date;
 
   @Column({ name: 'updated_at', nullable: true })
-  updatedAt: Date;
+  updatedAt?: Date;
 
   @OneToMany(() => Account, account => account.customer)
   accounts: Account[];
