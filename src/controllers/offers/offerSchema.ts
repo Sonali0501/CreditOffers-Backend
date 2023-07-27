@@ -11,4 +11,10 @@ export const CreateOfferSchemaZ = z.object({
   expiryTime: z.string(),
 });
 
+export const GetActiveOffersSchemaZ = z.object({
+  accountId: z.string(),
+  activeDate: z.string(),
+});
+
 export type CreateOfferSchema = z.infer<typeof CreateOfferSchemaZ>;
+export type GetActiveOffersSchema = z.infer<typeof GetActiveOffersSchemaZ>;

@@ -1,5 +1,5 @@
 import { format } from 'date-fns';
-import { CreateOfferSchema } from '@/controllers/offers/offerSchema';
+import { CreateOfferSchema, GetActiveOffersSchema } from '@/controllers/offers/offerSchema';
 import AccountModel from '@/database/repository/accounts';
 import OffersModel from '@/database/repository/offers';
 import { ServiceResponse } from '@/interfaces/service.interface';
@@ -11,6 +11,18 @@ const { limitTypes } = OfferConstants;
 class OffersService {
   private offersModel = new OffersModel();
   private accountModel = new AccountModel();
+
+  public async getActiveOffers(filters: GetActiveOffersSchema): Promise<ServiceResponse> {
+    const accountId = Number(filters.accountId);
+    const activeDate = new Date(filters.activeDate);
+
+    const activeOffers = await this.offersModel.getActiveOffers(accountId, activeDate);
+
+    return {
+      ok: true,
+      data: activeOffers,
+    };
+  }
 
   public async createOffer(offer: CreateOfferSchema): Promise<ServiceResponse> {
     const account = await this.accountModel.getAccount(offer.accountId);
