@@ -16,4 +16,17 @@ export default class AccountModel {
       return;
     }
   }
+
+  public async getAccount(accountId: number) {
+    try {
+      const account = await AppDataSource.getRepository(Account)
+        .createQueryBuilder('account')
+        .where({ id: accountId })
+        .getOne();
+      return account;
+    } catch (err) {
+      console.log(err);
+      return;
+    }
+  }
 }

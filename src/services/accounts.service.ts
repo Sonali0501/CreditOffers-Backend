@@ -1,11 +1,19 @@
-import { CreateProductSchema } from '@/controllers/accounts/accountSchema';
+import { CreateAccountSchema } from '@/controllers/accounts/accountSchema';
 import AccountModel from '@/database/repository/accounts';
 import { ServiceResponse } from '@/interfaces/service.interface';
 
 class AccountService {
   private accountModel = new AccountModel();
 
-  public async createAccount(account: CreateProductSchema): Promise<ServiceResponse> {
+  public async getAccount(accountId: number): Promise<ServiceResponse> {
+    const account = await this.accountModel.getAccount(accountId);
+    return {
+      ok: true,
+      data: account,
+    };
+  }
+
+  public async createAccount(account: CreateAccountSchema): Promise<ServiceResponse> {
     if (account.accountLimit < account.perTransactionLimit)
       return {
         ok: false,

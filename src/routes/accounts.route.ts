@@ -4,7 +4,7 @@ import authMiddleware from '@middlewares/auth.middleware';
 import { asyncResponseWrapper } from '@/helpers';
 import { validateRequestBody, validateRequestQueries } from '@middlewares/validation.middleware';
 import AccountController from '@/controllers/accounts/accounts.controller';
-import { CreateProductSchemaZ } from '@/controllers/accounts/accountSchema';
+import { CreateAccountSchemaZ, GetAccountSchemaZ } from '@/controllers/accounts/accountSchema';
 
 class AccountRoutes implements Routes {
   public path = '/api/v1/account';
@@ -18,9 +18,14 @@ class AccountRoutes implements Routes {
   private initializeRoutes() {
     this.router
       .route(`${this.path}/`)
+      .get(
+        authMiddleware,
+        validateRequestQueries(GetAccountSchemaZ),
+        asyncResponseWrapper(this.accountController.getAccount),
+      )
       .post(
         authMiddleware,
-        validateRequestBody(CreateProductSchemaZ),
+        validateRequestBody(CreateAccountSchemaZ),
         asyncResponseWrapper(this.accountController.createAccount),
       );
   }
