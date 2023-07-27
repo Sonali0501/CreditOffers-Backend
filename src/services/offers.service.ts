@@ -1,12 +1,12 @@
 import { format } from 'date-fns';
-import { CreateOfferSchema, GetActiveOffersSchema } from '@/controllers/offers/offerSchema';
+import { CreateOfferSchema, GetActiveOffersSchema, UpdateOfferStatusSchema } from '@/controllers/offers/offerSchema';
 import AccountModel from '@/database/repository/accounts';
 import OffersModel from '@/database/repository/offers';
 import { ServiceResponse } from '@/interfaces/service.interface';
 import { Account } from '@/database/entity/accounts';
 import { OfferConstants } from '@constants';
 
-const { limitTypes } = OfferConstants;
+const { limitTypes, statuses } = OfferConstants;
 
 class OffersService {
   private offersModel = new OffersModel();
@@ -50,6 +50,51 @@ class OffersService {
         message: 'successfully created offer',
         offer: newOffer,
       },
+    };
+  }
+
+  public async updateOfferStatus(data: UpdateOfferStatusSchema): Promise<ServiceResponse> {
+    const activeOffer = await this.offersModel.getOfferById(data.id);
+    if (!activeOffer)
+      return {
+        ok: false,
+        err: `No active offer with id: ${data.id}`,
+      };
+
+    if (data.status === statuses.rejected) {
+      const rejectResp = await this.offersModel.rejectOffer(data.id);
+      if (!rejectResp)
+        return {
+          ok: false,
+          err: 'Failed to reject offer',
+        };
+
+      return {
+        ok: true,
+        data: {
+          message: 'Successfully rejected offer',
+        },
+      };
+    }
+
+    if (data.status === statuses.accepted) {
+      const acceptResp = await this.offersModel.acceptOffer(data.id, activeOffer);
+      if (!acceptResp)
+        return {
+          ok: false,
+          err: 'Failed to accept offer',
+        };
+      return {
+        ok: true,
+        data: {
+          message: 'Successfully accepted offer',
+        },
+      };
+    }
+
+    return {
+      ok: false,
+      err: 'unknown status value',
     };
   }
 

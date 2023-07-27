@@ -4,7 +4,7 @@ import authMiddleware from '@middlewares/auth.middleware';
 import { asyncResponseWrapper } from '@/helpers';
 import { validateRequestBody, validateRequestQueries } from '@middlewares/validation.middleware';
 import OffersController from '@/controllers/offers/offers.controller';
-import { CreateOfferSchemaZ, GetActiveOffersSchemaZ } from '@/controllers/offers/offerSchema';
+import { CreateOfferSchemaZ, GetActiveOffersSchemaZ, UpdateOfferStatusSchemaZ } from '@/controllers/offers/offerSchema';
 
 class OffersRoutes implements Routes {
   public path = '/api/v1/offer';
@@ -27,6 +27,11 @@ class OffersRoutes implements Routes {
         authMiddleware,
         validateRequestBody(CreateOfferSchemaZ),
         asyncResponseWrapper(this.offersController.createOffer),
+      )
+      .put(
+        authMiddleware,
+        validateRequestBody(UpdateOfferStatusSchemaZ),
+        asyncResponseWrapper(this.offersController.updateOfferStatus),
       );
   }
 }

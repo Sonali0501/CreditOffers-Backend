@@ -17,6 +17,12 @@ class OffersController {
     if (!resp?.ok) return res.invalid({ code: 400, msg: resp.err });
     return res.success({ data: resp.data });
   };
+
+  public updateOfferStatus = async (req: Request, res: CustomResponse): Promise<CustomResponse> => {
+    const resp: ServiceResponse = await this.offersService.updateOfferStatus(req.body);
+    if (!resp?.ok) return res.invalid({ code: 400, msg: resp.err });
+    return res.success({ data: resp.data });
+  };
 }
 
 export default OffersController;

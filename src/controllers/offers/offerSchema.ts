@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { OfferConstants } from '@/constants';
 
-const { limitTypes } = OfferConstants;
+const { limitTypes, statuses } = OfferConstants;
 
 export const CreateOfferSchemaZ = z.object({
   accountId: z.number(),
@@ -16,5 +16,11 @@ export const GetActiveOffersSchemaZ = z.object({
   activeDate: z.string(),
 });
 
+export const UpdateOfferStatusSchemaZ = z.object({
+  id: z.number(),
+  status: z.enum([statuses.accepted, statuses.rejected]),
+});
+
 export type CreateOfferSchema = z.infer<typeof CreateOfferSchemaZ>;
 export type GetActiveOffersSchema = z.infer<typeof GetActiveOffersSchemaZ>;
+export type UpdateOfferStatusSchema = z.infer<typeof UpdateOfferStatusSchemaZ>;
