@@ -1,24 +1,16 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, BaseEntity } from 'typeorm';
 import { Account } from './accounts';
+import { OfferConstants } from '@/constants';
 
-export enum limitTypes {
-  accountLimit = 'ACCOUNT_LIMIT',
-  perTransactionLimit = 'PER_TRANSACTION_LIMIT',
-}
-
-export enum Statuses {
-  accepted = 'ACCEPTED',
-  rejected = 'REJECTED',
-  pending = 'PENDING',
-}
+const { limitTypesEnum, statusEnum, statuses } = OfferConstants;
 
 @Entity('offers')
 export class Offer extends BaseEntity {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
-  @Column({ type: 'enum', enum: limitTypes, name: 'limit_type' })
-  limitType: limitTypes;
+  @Column({ type: 'enum', enum: limitTypesEnum, name: 'limit_type' })
+  limitType: string;
 
   @Column({ name: 'new_limit' })
   newLimit: number;
@@ -29,8 +21,8 @@ export class Offer extends BaseEntity {
   @Column({ name: 'expiry_time' })
   expiryTime: Date;
 
-  @Column({ type: 'enum', enum: Statuses, default: 'PENDING' })
-  status: Statuses;
+  @Column({ type: 'enum', enum: statusEnum, default: statuses.pending })
+  status: string;
 
   @Column({ name: 'created_at' })
   createdAt: Date;

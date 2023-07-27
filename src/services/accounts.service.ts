@@ -31,7 +31,7 @@ class AccountService {
       ok: true,
       data: {
         message: 'successfully created account',
-        product: newAccount,
+        account: newAccount,
       },
     };
   }
